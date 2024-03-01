@@ -1,20 +1,20 @@
 import cv2
-img = cv2.imread('images/employee.png') # images اسم الملف عشان نعرفو 
-classnames = [] #هون ليست راح يكون 
+img = cv2.imread('images/employee.png') # the name of file for images  
+classnames = [] # list or arriy 
 classfile = "files/thing.names"
 
-with open(classfile, 'rt') as f :    #   كل ما ننده لحرف اف بالبرنامج راح ينادي rt 
+with open(classfile, 'rt') as f :    #   if we calling F the rt answing
     classnames = f.read() .rstrip('\n').split('\n')
 #print(classnames)
     p= 'files/frozen_inference_graph.pb' 
     v='files/ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt'
-    net = cv2.dnn_DetectionModel(p,v) #الكشف  والفحص  
-    net.setInputSize(320,230) #ؤ العرض والارتفاع 
-    net.setInputScale(1.0 / 127.5)  #القياس 
+    net = cv2.dnn_DetectionModel(p,v) #اDetection and examination 
+    net.setInputSize(320,230) # width and height 
+    net.setInputScale(1.0 / 127.5)  #اsize 
     net.setInputMean((127.5,127.5,127.5))  
-    net.setInputSwapRB(True) # نظام الاوان 
+    net.setInputSwapRB(True) # color system  
     
-    classIds , confs , bbox = net.detect(img, confThreshold=0.5)   # دقه الفحص 
+    classIds , confs , bbox = net.detect(img, confThreshold=0.5)   # Detection accuracy 
     #print(classIds,bbox)
     for classId , confidence , box in zip(classIds.flatten(),confs.flatten(),bbox):
         cv2.rectangle(img,box,color=(0,255,0),thickness=3 )
